@@ -9,6 +9,7 @@ import com.uguz.flightsearch.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -36,8 +37,8 @@ public class FlightImpl implements FlightService {
         Flight flight = new Flight();
         flight.setArrivalAirport(arrivalAirport);
         flight.setDepartureAirport(departureAirport);
-        flight.setDepartureTime(flightDto.getDepartureTime());
-        flight.setReturnTime(flightDto.getReturnTime());
+        flight.setDepartureDate(flightDto.getDepartureDate());
+        flight.setReturnDate(flightDto.getReturnDate());
         flight.setPrice(flightDto.getPrice());
 
         return this.flightRepository.save(flight);
@@ -61,8 +62,8 @@ public class FlightImpl implements FlightService {
 
         flight.setArrivalAirport(arrivalAirport);
         flight.setDepartureAirport(departureAirport);
-        flight.setDepartureTime(flightDto.getDepartureTime());
-        flight.setReturnTime(flightDto.getReturnTime());
+        flight.setDepartureDate(flightDto.getDepartureDate());
+        flight.setReturnDate(flightDto.getReturnDate());
         flight.setPrice(flightDto.getPrice());
 
         return this.flightRepository.save(flight);
@@ -71,5 +72,11 @@ public class FlightImpl implements FlightService {
     @Override
     public void delete(long flightId) {
         this.flightRepository.deleteById(flightId);
+    }
+
+    @Override
+    public List<Flight> findFlight(String departureAirport, String arrivalAirport, LocalDate departureDate, LocalDate returnDate) {
+//        return this.flightRepository.findFlightsByCitiesAndDates(departureAirport,arrivalAirport,departureDate,returnDate);
+        return this.flightRepository.findFlightsByDepartureAirport_CityAndArrivalAirport_CityAndDepartureDateAndReturnDate(departureAirport,arrivalAirport,departureDate,returnDate);
     }
 }
