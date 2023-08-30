@@ -1,8 +1,8 @@
-package com.uguz.flightsearch.business.concretes;
+package com.uguz.flightsearch.config.jwt.service;
 
+import com.uguz.flightsearch.config.jwt.config.JwtUserDetails;
 import com.uguz.flightsearch.entities.User;
 import com.uguz.flightsearch.repository.UserRepository;
-import com.uguz.flightsearch.security.JwtUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

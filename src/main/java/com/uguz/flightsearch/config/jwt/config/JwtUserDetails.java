@@ -1,4 +1,4 @@
-package com.uguz.flightsearch.security;
+package com.uguz.flightsearch.config.jwt.config;
 
 import com.uguz.flightsearch.entities.User;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.uguz.flightsearch.security;
+package com.uguz.flightsearch.config.jwt.config;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;

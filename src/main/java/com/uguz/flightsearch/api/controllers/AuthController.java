@@ -1,9 +1,9 @@
 package com.uguz.flightsearch.api.controllers;
 
 import com.uguz.flightsearch.business.abstracts.UserService;
+import com.uguz.flightsearch.config.jwt.config.JwtTokenProvider;
 import com.uguz.flightsearch.dto.UserDto;
 import com.uguz.flightsearch.entities.User;
-import com.uguz.flightsearch.security.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

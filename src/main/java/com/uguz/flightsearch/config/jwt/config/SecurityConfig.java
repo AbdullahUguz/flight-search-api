@@ -1,9 +1,7 @@
-package com.uguz.flightsearch.config;
+package com.uguz.flightsearch.config.jwt.config;
 
-import com.uguz.flightsearch.business.concretes.UserDetailManager;
-import com.uguz.flightsearch.security.JwtAuthenticationEntryPoint;
+import com.uguz.flightsearch.config.jwt.service.UserDetailManager;
 
-import com.uguz.flightsearch.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
