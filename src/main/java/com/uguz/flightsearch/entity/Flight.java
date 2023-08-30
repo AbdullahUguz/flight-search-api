@@ -1,12 +1,17 @@
 package com.uguz.flightsearch.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.uguz.flightsearch.config.date.CustomLocalDateTimeDeserializer;
+import com.uguz.flightsearch.config.date.CustomLocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "flights")
@@ -19,17 +24,21 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "departure_airport_id")
     private Airport departureAirport;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "arrival_airport_id")
     private Airport arrivalAirport;
 
-    private LocalDateTime departureTime;
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    private LocalDate departureDate;
 
-    private LocalDateTime returnTime;
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    private LocalDate returnDate;
 
     private BigDecimal price;
 
