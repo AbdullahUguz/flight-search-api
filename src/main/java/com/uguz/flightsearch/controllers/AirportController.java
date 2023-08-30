@@ -23,9 +23,9 @@ public class AirportController {
 
     @AuthorizationInfo
     @PostMapping("/create")
-    public ResponseEntity<Airport> create(@RequestBody Airport airport){
+    public ResponseEntity<Airport> create(@RequestBody AirportDto airportDto){
         try {
-            return new ResponseEntity<>(this.airportService.create(airport), HttpStatus.OK);
+            return new ResponseEntity<>(this.airportService.create(airportDto), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
@@ -55,7 +55,7 @@ public class AirportController {
     @DeleteMapping("/delete/{airportId}")
     public ResponseEntity<String> delete(@PathVariable int airportId){
         try {
-            this.airportService.delete(airportId);
+            this.airportService.delete(Long.valueOf(airportId));
             return new ResponseEntity<>("Airport deleted", HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);

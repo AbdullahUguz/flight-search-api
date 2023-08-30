@@ -19,7 +19,9 @@ public class AirportImpl implements AirportService {
     }
 
     @Override
-    public Airport create(Airport airport) {
+    public Airport create(AirportDto airportDto) {
+        Airport airport = new Airport();
+        airport.setCity(airportDto.getCity());
         return this.airportRepository.save(airport);
     }
 
@@ -42,6 +44,5 @@ public class AirportImpl implements AirportService {
     public void delete(long airportId) {
         this.airportRepository.deleteById(airportId);
     }
-
 
 }
