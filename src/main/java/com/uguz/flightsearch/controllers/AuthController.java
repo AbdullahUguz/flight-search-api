@@ -1,9 +1,9 @@
-package com.uguz.flightsearch.api.controllers;
+package com.uguz.flightsearch.controllers;
 
-import com.uguz.flightsearch.business.abstracts.UserService;
+import com.uguz.flightsearch.business.service.UserService;
 import com.uguz.flightsearch.config.jwt.config.JwtTokenProvider;
 import com.uguz.flightsearch.dto.UserDto;
-import com.uguz.flightsearch.entities.User;
+import com.uguz.flightsearch.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/v1/auth")
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
@@ -45,7 +47,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserDto registerRequest) {
+    public ResponseEntity<String> register(@RequestBody @Valid UserDto registerRequest) {
         if(userService.getOneUserByEmail(registerRequest.getEmail()) != null)
             return new ResponseEntity<>("Username already in use.", HttpStatus.BAD_REQUEST);
 

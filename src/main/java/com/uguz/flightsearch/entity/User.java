@@ -1,10 +1,11 @@
-package com.uguz.flightsearch.entities;
+package com.uguz.flightsearch.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "users")
@@ -16,7 +17,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email",unique = true)
+    @Email
+    @Column(name = "email",unique = true,nullable = false)
     private String email;
 
     private String password;

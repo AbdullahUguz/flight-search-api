@@ -1,6 +1,6 @@
 package com.uguz.flightsearch.repository;
 
-import com.uguz.flightsearch.entities.User;
+import com.uguz.flightsearch.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,6 +1,6 @@
-package com.uguz.flightsearch.business.abstracts;
+package com.uguz.flightsearch.business.service;
 
-import com.uguz.flightsearch.entities.User;
+import com.uguz.flightsearch.entity.User;
 
 public interface UserService {
 //    void create(User user);

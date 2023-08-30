@@ -1,7 +1,7 @@
-package com.uguz.flightsearch.business.abstracts;
+package com.uguz.flightsearch.business.service;
 
 import com.uguz.flightsearch.dto.AirportDto;
-import com.uguz.flightsearch.entities.Airport;
+import com.uguz.flightsearch.entity.Airport;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.uguz.flightsearch.config.jwt.config;
 
-import com.uguz.flightsearch.entities.User;
+import com.uguz.flightsearch.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,19 +1,19 @@
-package com.uguz.flightsearch.business.concretes;
+package com.uguz.flightsearch.business.impl;
 
-import com.uguz.flightsearch.business.abstracts.UserService;
-import com.uguz.flightsearch.entities.User;
+import com.uguz.flightsearch.business.service.UserService;
+import com.uguz.flightsearch.entity.User;
 import com.uguz.flightsearch.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserManager implements UserService {
+public class UserImpl implements UserService {
 
     private UserRepository userRepository;
 
     @Autowired
-    public UserManager(UserRepository userRepository) {
+    public UserImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -1,9 +1,9 @@
-package com.uguz.flightsearch.api.controllers;
+package com.uguz.flightsearch.controllers;
 
-import com.uguz.flightsearch.business.abstracts.AirportService;
+import com.uguz.flightsearch.business.service.AirportService;
 import com.uguz.flightsearch.config.swagger.AuthorizationInfo;
 import com.uguz.flightsearch.dto.AirportDto;
-import com.uguz.flightsearch.entities.Airport;
+import com.uguz.flightsearch.entity.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/airports")
+@RequestMapping("/v1/airports")
 public class AirportController {
     private AirportService airportService;
 

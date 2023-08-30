@@ -1,4 +1,4 @@
-package com.uguz.flightsearch.entities;
+package com.uguz.flightsearch.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

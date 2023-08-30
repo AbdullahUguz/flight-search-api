@@ -1,8 +1,8 @@
-package com.uguz.flightsearch.business.concretes;
+package com.uguz.flightsearch.business.impl;
 
-import com.uguz.flightsearch.business.abstracts.AirportService;
+import com.uguz.flightsearch.business.service.AirportService;
 import com.uguz.flightsearch.dto.AirportDto;
-import com.uguz.flightsearch.entities.Airport;
+import com.uguz.flightsearch.entity.Airport;
 import com.uguz.flightsearch.repository.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AirportManager implements AirportService {
+public class AirportImpl implements AirportService {
     private AirportRepository airportRepository;
 
     @Autowired
-    public AirportManager(AirportRepository airportRepository){
+    public AirportImpl(AirportRepository airportRepository){
         this.airportRepository=airportRepository;
     }
 
