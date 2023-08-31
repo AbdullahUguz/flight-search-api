@@ -1,6 +1,7 @@
 package com.uguz.flightsearch.business.impl;
 
 import com.uguz.flightsearch.business.service.AirportService;
+import com.uguz.flightsearch.cache.City;
 import com.uguz.flightsearch.dto.AirportDto;
 import com.uguz.flightsearch.entity.Airport;
 import com.uguz.flightsearch.repository.AirportRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class AirportImpl implements AirportService {
@@ -20,8 +22,12 @@ public class AirportImpl implements AirportService {
 
     @Override
     public Airport create(AirportDto airportDto) {
+
         Airport airport = new Airport();
-        airport.setCity(airportDto.getCity());
+        if(!City.of().isExistCity(airportDto.getCity())){
+            return null;
+        }
+        airport.setCity(airportDto.getCity().toUpperCase(Locale.ROOT));
         return this.airportRepository.save(airport);
     }
 
@@ -33,10 +39,11 @@ public class AirportImpl implements AirportService {
     @Override
     public Airport update(long airportId, AirportDto airportDto) {
         Airport airport = this.airportRepository.findById(airportId).get();
-        if(airport == null){
+
+        if(!City.of().isExistCity(airportDto.getCity())){
             return null;
         }
-        airport.setCity(airportDto.getCity());
+        airport.setCity(airportDto.getCity().toUpperCase(Locale.ROOT));
         return this.airportRepository.save(airport);
     }
 

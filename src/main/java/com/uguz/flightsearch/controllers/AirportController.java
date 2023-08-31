@@ -3,6 +3,7 @@ package com.uguz.flightsearch.controllers;
 import com.uguz.flightsearch.business.service.AirportService;
 import com.uguz.flightsearch.config.swagger.AuthorizationInfo;
 import com.uguz.flightsearch.dto.AirportDto;
+import com.uguz.flightsearch.entity.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,11 @@ public class AirportController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody AirportDto airportDto){
         try {
-            return new ResponseEntity<>(this.airportService.create(airportDto), HttpStatus.OK);
+            Airport airport = this.airportService.create(airportDto);
+            if(airport == null){
+                return new ResponseEntity<>("City Not Found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(airport, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>("Exception : "+e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
@@ -42,7 +47,11 @@ public class AirportController {
     @PutMapping("/update/{airportId}")
     public ResponseEntity<?> update(@PathVariable int airportId,@RequestBody AirportDto airportDto){
         try {
-            return new ResponseEntity<>(this.airportService.update(Long.valueOf(airportId),airportDto), HttpStatus.OK);
+            Airport airport = this.airportService.update(Long.valueOf(airportId),airportDto);
+            if(airport == null){
+                return new ResponseEntity<>("City Not Found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(airport, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>("Exception : "+e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
