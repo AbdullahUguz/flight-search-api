@@ -1,6 +1,7 @@
 package com.uguz.flightsearch.business.impl;
 
 import com.uguz.flightsearch.business.service.FlightService;
+import com.uguz.flightsearch.constant.FlightType;
 import com.uguz.flightsearch.dto.FlightDto;
 import com.uguz.flightsearch.entity.Airport;
 import com.uguz.flightsearch.entity.Flight;
@@ -10,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import static com.uguz.flightsearch.constant.FlightType.ONE_WAY;
+import static com.uguz.flightsearch.constant.FlightType.ROUND_WAY;
 
 @Service
 public class FlightImpl implements FlightService {
@@ -21,9 +24,9 @@ public class FlightImpl implements FlightService {
 
 
     @Autowired
-    public FlightImpl(FlightRepository flightRepository,AirportRepository airportRepository){
-        this.flightRepository=flightRepository;
-        this.airportRepository=airportRepository;
+    public FlightImpl(FlightRepository flightRepository, AirportRepository airportRepository) {
+        this.flightRepository = flightRepository;
+        this.airportRepository = airportRepository;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class FlightImpl implements FlightService {
         Airport departureAirport = this.airportRepository.findById(flightDto.getDepartureAirportId()).get();
         Airport arrivalAirport = this.airportRepository.findById(flightDto.getArrivalAirportId()).get();
 
-        if(departureAirport == null || arrivalAirport ==null){
+        if (departureAirport == null || arrivalAirport == null) {
             return null;
         }
 
@@ -57,7 +60,7 @@ public class FlightImpl implements FlightService {
         Airport departureAirport = this.airportRepository.findById(flightDto.getDepartureAirportId()).get();
         Airport arrivalAirport = this.airportRepository.findById(flightDto.getArrivalAirportId()).get();
 
-        if(departureAirport == null || arrivalAirport ==null || flight ==null){
+        if (departureAirport == null || arrivalAirport == null || flight == null) {
             return null;
         }
 
@@ -76,24 +79,35 @@ public class FlightImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> findFlight(String departureAirport, String arrivalAirport, LocalDate departureDate, LocalDate returnDate) {
+    public List<Map> findFlight(String departureAirport, String arrivalAirport, LocalDate departureDate, LocalDate returnDate) {
+
+        List<Map> flightList = new ArrayList<>();
+
+        Map<FlightType,List<Flight>> oneWay =new HashMap<>();
+
+        Map<FlightType,List<Flight>> roundWay =new HashMap<>();
+
         List<Flight> oneWayFlights = this.flightRepository
-                .findFlightsByDepartureAirport_CityAndArrivalAirport_CityAndDepartureDate(departureAirport
-                        ,arrivalAirport
-                        ,departureDate);
+                .findFlightsByDepartureAirport_CityAndArrivalAirport_CityAndDepartureDate(
+                        departureAirport.toUpperCase(Locale.ROOT)
+                        , arrivalAirport.toUpperCase(Locale.ROOT)
+                        , departureDate);
 
-        if(returnDate != null){
-            List<Flight> returnFlights =this.flightRepository
-                    .findFlightsByDepartureAirport_CityAndArrivalAirport_CityAndReturnDate(departureAirport
-                            ,arrivalAirport
-                            ,returnDate);
-            List<Flight> roundTripFlights = new ArrayList<>();
-            roundTripFlights.addAll(oneWayFlights);
-            roundTripFlights.addAll(returnFlights);
+        oneWay.put(ONE_WAY,oneWayFlights);
+        flightList.add(oneWay);
 
-            return roundTripFlights;
+        if (returnDate != null) {
+            List<Flight> returnFlights = this.flightRepository
+                    .findFlightsByDepartureAirport_CityAndArrivalAirport_CityAndDepartureDate(
+                             arrivalAirport.toUpperCase(Locale.ROOT)
+                            , departureAirport.toUpperCase(Locale.ROOT)
+                            , returnDate);
+
+            roundWay.put(ROUND_WAY,returnFlights);
+            flightList.add(roundWay);
+
+            return flightList;
         }
-
-        return oneWayFlights;
+        return flightList;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/flights")
@@ -76,7 +77,7 @@ public class FlightController {
     ) {
 
         try {
-            List<Flight> flights = this.flightService.findFlight(departureAirport,arrivalAirport,departureDate,returnDate);
+            List<Map> flights = this.flightService.findFlight(departureAirport,arrivalAirport,departureDate,returnDate);
             if(flights.isEmpty()){
                 return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
             }
