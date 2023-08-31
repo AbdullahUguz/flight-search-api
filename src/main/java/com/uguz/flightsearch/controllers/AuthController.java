@@ -48,14 +48,19 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid UserDto registerRequest) {
-        if(userService.getOneUserByEmail(registerRequest.getEmail()) != null)
-            return new ResponseEntity<>("Username already in use.", HttpStatus.BAD_REQUEST);
+        try{
+            if(userService.getOneUserByEmail(registerRequest.getEmail()) != null)
+                return new ResponseEntity<>("Username already in use.", HttpStatus.BAD_REQUEST);
 
-        User user = new User();
-        user.setEmail(registerRequest.getEmail());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        this.userService.add(user);
-        return new ResponseEntity<>("User successfully registered.", HttpStatus.CREATED);
+            User user = new User();
+            user.setEmail(registerRequest.getEmail());
+            user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            this.userService.add(user);
+            return new ResponseEntity<>("User successfully registered.", HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>("Exception : "+e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+
+        }
     }
 
 }
