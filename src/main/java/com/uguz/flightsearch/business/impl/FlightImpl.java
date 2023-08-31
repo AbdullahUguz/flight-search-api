@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -76,7 +77,23 @@ public class FlightImpl implements FlightService {
 
     @Override
     public List<Flight> findFlight(String departureAirport, String arrivalAirport, LocalDate departureDate, LocalDate returnDate) {
-//        return this.flightRepository.findFlightsByCitiesAndDates(departureAirport,arrivalAirport,departureDate,returnDate);
-        return this.flightRepository.findFlightsByDepartureAirport_CityAndArrivalAirport_CityAndDepartureDateAndReturnDate(departureAirport,arrivalAirport,departureDate,returnDate);
+        List<Flight> oneWayFlights = this.flightRepository
+                .findFlightsByDepartureAirport_CityAndArrivalAirport_CityAndDepartureDate(departureAirport
+                        ,arrivalAirport
+                        ,departureDate);
+
+        if(returnDate != null){
+            List<Flight> returnFlights =this.flightRepository
+                    .findFlightsByDepartureAirport_CityAndArrivalAirport_CityAndReturnDate(departureAirport
+                            ,arrivalAirport
+                            ,returnDate);
+            List<Flight> roundTripFlights = new ArrayList<>();
+            roundTripFlights.addAll(oneWayFlights);
+            roundTripFlights.addAll(returnFlights);
+
+            return roundTripFlights;
+        }
+
+        return oneWayFlights;
     }
 }
