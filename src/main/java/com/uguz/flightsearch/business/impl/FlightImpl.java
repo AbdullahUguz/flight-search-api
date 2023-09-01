@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
 
+
 import static com.uguz.flightsearch.constant.FlightType.ONE_WAY;
 import static com.uguz.flightsearch.constant.FlightType.ROUND_WAY;
 
 @Service
 public class FlightImpl implements FlightService {
 
-    private FlightRepository flightRepository;
-    private AirportRepository airportRepository;
-
+    private final FlightRepository flightRepository;
+    private final AirportRepository airportRepository;
 
     @Autowired
     public FlightImpl(FlightRepository flightRepository, AirportRepository airportRepository) {
@@ -31,16 +31,16 @@ public class FlightImpl implements FlightService {
 
     @Override
     public Flight create(FlightDto flightDto) {
-        Airport departureAirport = this.airportRepository.findById(flightDto.getDepartureAirportId()).get();
-        Airport arrivalAirport = this.airportRepository.findById(flightDto.getArrivalAirportId()).get();
+        Optional<Airport> departureAirport = this.airportRepository.findById(flightDto.getDepartureAirportId());
+        Optional<Airport> arrivalAirport = this.airportRepository.findById(flightDto.getArrivalAirportId());
 
-        if (departureAirport == null || arrivalAirport == null) {
+        if (departureAirport.isEmpty() || arrivalAirport.isEmpty()) {
             return null;
         }
 
         Flight flight = new Flight();
-        flight.setArrivalAirport(arrivalAirport);
-        flight.setDepartureAirport(departureAirport);
+        flight.setArrivalAirport(arrivalAirport.get());
+        flight.setDepartureAirport(departureAirport.get());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setReturnDate(flightDto.getReturnDate());
         flight.setPrice(flightDto.getPrice());
@@ -55,22 +55,22 @@ public class FlightImpl implements FlightService {
 
     @Override
     public Flight update(long flightId, FlightDto flightDto) {
-        Flight flight = this.flightRepository.findById(flightId).get();
+        Optional<Flight> flight = this.flightRepository.findById(flightId);
 
-        Airport departureAirport = this.airportRepository.findById(flightDto.getDepartureAirportId()).get();
-        Airport arrivalAirport = this.airportRepository.findById(flightDto.getArrivalAirportId()).get();
+        Optional<Airport> departureAirport = this.airportRepository.findById(flightDto.getDepartureAirportId());
+        Optional<Airport> arrivalAirport = this.airportRepository.findById(flightDto.getArrivalAirportId());
 
-        if (departureAirport == null || arrivalAirport == null || flight == null) {
+        if (departureAirport.isEmpty() || arrivalAirport.isEmpty() || flight.isEmpty()) {
             return null;
         }
 
-        flight.setArrivalAirport(arrivalAirport);
-        flight.setDepartureAirport(departureAirport);
-        flight.setDepartureDate(flightDto.getDepartureDate());
-        flight.setReturnDate(flightDto.getReturnDate());
-        flight.setPrice(flightDto.getPrice());
+        flight.get().setArrivalAirport(arrivalAirport.get());
+        flight.get().setDepartureAirport(departureAirport.get());
+        flight.get().setDepartureDate(flightDto.getDepartureDate());
+        flight.get().setReturnDate(flightDto.getReturnDate());
+        flight.get().setPrice(flightDto.getPrice());
 
-        return this.flightRepository.save(flight);
+        return this.flightRepository.save(flight.get());
     }
 
     @Override
@@ -79,9 +79,9 @@ public class FlightImpl implements FlightService {
     }
 
     @Override
-    public List<Map> findFlight(String departureAirport, String arrivalAirport, LocalDate departureDate, LocalDate returnDate) {
+    public List<Map<FlightType,List<Flight>>> findFlight(String departureAirport, String arrivalAirport, LocalDate departureDate, LocalDate returnDate) {
 
-        List<Map> flightList = new ArrayList<>();
+        List<Map<FlightType,List<Flight>>> flightList = new ArrayList<>();
 
         Map<FlightType,List<Flight>> oneWay =new HashMap<>();
 

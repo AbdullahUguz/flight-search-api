@@ -2,6 +2,7 @@ package com.uguz.flightsearch.controllers;
 
 import com.uguz.flightsearch.business.service.FlightService;
 import com.uguz.flightsearch.config.swagger.AuthorizationInfo;
+import com.uguz.flightsearch.constant.FlightType;
 import com.uguz.flightsearch.dto.FlightDto;
 import com.uguz.flightsearch.entity.Flight;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,11 @@ public class FlightController {
     @PutMapping("/update/{flightId}")
     public ResponseEntity<?> update(@PathVariable int flightId, @RequestBody FlightDto flightDto) {
         try {
-            return new ResponseEntity<>(this.flightService.update(Long.valueOf(flightId), flightDto), HttpStatus.OK);
-
+            Flight flight = this.flightService.update(flightId, flightDto);
+            if(flight == null){
+                return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(flight, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Exception : "+e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
@@ -59,7 +63,7 @@ public class FlightController {
     @DeleteMapping("/delete/{flightId}")
     public ResponseEntity<?> delete(@PathVariable int flightId) {
         try {
-            this.flightService.delete(Long.valueOf(flightId));
+            this.flightService.delete(flightId);
             return new ResponseEntity<>("Flight deleted", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Exception : "+e.getMessage(), HttpStatus.EXPECTATION_FAILED);
@@ -77,7 +81,7 @@ public class FlightController {
     ) {
 
         try {
-            List<Map> flights = this.flightService.findFlight(departureAirport,arrivalAirport,departureDate,returnDate);
+            List<Map<FlightType,List<Flight>>> flights = this.flightService.findFlight(departureAirport,arrivalAirport,departureDate,returnDate);
             if(flights.isEmpty()){
                 return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
             }

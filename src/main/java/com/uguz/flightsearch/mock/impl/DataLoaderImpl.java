@@ -1,6 +1,5 @@
 package com.uguz.flightsearch.mock.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.uguz.flightsearch.mock.service.DataLoaderService;
 import com.uguz.flightsearch.mock.service.DataService;
 import com.uguz.flightsearch.repository.FlightRepository;
@@ -22,8 +21,8 @@ public class DataLoaderImpl implements DataLoaderService {
 
     @Override
 //    @Scheduled(cron = "0 0 0 * * ?") // her 00:00 da
-    @Scheduled(cron = "0 * * * * ?")  // her dakika
-    public void loadFlightData() throws JsonProcessingException {
+//    @Scheduled(cron = "0 * * * * ?")  // her dakika
+    public void loadFlightData() {
         try{
             this.flightRepository.saveAll(this.flightDataService.fetchFlightData());
         }catch (Exception e){

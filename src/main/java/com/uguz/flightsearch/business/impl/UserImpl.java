@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserImpl implements UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserImpl(UserRepository userRepository) {

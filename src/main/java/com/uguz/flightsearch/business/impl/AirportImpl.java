@@ -13,7 +13,7 @@ import java.util.Locale;
 
 @Service
 public class AirportImpl implements AirportService {
-    private AirportRepository airportRepository;
+    private final AirportRepository airportRepository;
 
     @Autowired
     public AirportImpl(AirportRepository airportRepository){
