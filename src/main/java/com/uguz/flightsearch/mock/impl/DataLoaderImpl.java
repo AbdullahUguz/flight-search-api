@@ -20,8 +20,8 @@ public class DataLoaderImpl implements DataLoaderService {
     }
 
     @Override
-//    @Scheduled(cron = "0 0 0 * * ?") // her 00:00 da
-//    @Scheduled(cron = "0 * * * * ?")  // her dakika
+    @Scheduled(cron = "0 0 0 * * ?") //  00:00
+//    @Scheduled(cron = "0 * * * * ?")  // each minute
     public void loadFlightData() {
         try{
             this.flightRepository.saveAll(this.flightDataService.fetchFlightData());
