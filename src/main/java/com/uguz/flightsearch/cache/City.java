@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class City {
     private static final City INSTANCE = new City();
-    private final Set<String> cities = Set.of("ANKARA","ISTANBUL","IZMIR","KAYSERI","KONYA","BURSA","ADANA");
+    private final Set<String> cities = Set.of("ANKARA","ISTANBUL","IZMIR","KAYSERI","KONYA","BURSA","ADANA","TRABZON","HATAY","");
 
     private City(){
 

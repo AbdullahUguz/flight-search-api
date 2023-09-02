@@ -27,7 +27,7 @@ class SwaggerConfig {
     private ApiInfo apiEndPointsInfo(){
         return new ApiInfoBuilder().title("Flight Search Api")
                 .description("Rest Api Documentation")
-                .contact(new Contact("Abdullah UĞUZ", "","abdullah@gmail.com"))
+                .contact(new Contact("Abdullah UĞUZ", "","abdullahuguz08@gmail.com"))
                 .license("Apache 2.0")
                 .build();
     }
